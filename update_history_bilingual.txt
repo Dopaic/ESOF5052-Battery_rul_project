@@ -1,0 +1,148 @@
+
+──────────────────────────────────────────────
+🔋 电池寿命预测项目 — 更新历史汇总（中英对照）
+Battery RUL Prediction Project — Full Update History
+──────────────────────────────────────────────
+
+【阶段 1】项目初始化（Initial Setup）
+──────────────────────────────
+中文：
+- 建立基础项目结构：data/, src/, outputs/
+- 实现初版 load_data.py（读取 NASA .mat 文件）
+- 实现初版 visualize.py（容量、SOH、EOL 直方图绘制）
+- main.py 调用完整流程（加载 → 可视化 → 模型训练）
+
+English:
+- Created base project folders: data/, src/, outputs/
+- Implemented initial load_data.py to read NASA .mat files
+- Added visualize.py for capacity, SOH, and EOL plots
+- main.py executes full workflow: load → visualize → train models
+
+
+【阶段 2】基础数据修复与异常处理（Base Data Fix & Error Handling）
+──────────────────────────────
+中文：
+- 修复“无 cycle 字段”导致的 KeyError
+- 加入 _find_cycle_container 自动检测数据层级
+- 新增 _safe_mean 函数以防止空数组报错
+- 解决 “Mean of empty slice” 的警告
+
+English:
+- Fixed KeyError from missing 'cycle' field
+- Added _find_cycle_container to auto-detect cycle layer
+- Introduced _safe_mean to prevent errors on empty data
+- Suppressed RuntimeWarning: “Mean of empty slice”
+
+
+【阶段 3】首次完整可视化版本（First Complete Visualization）
+──────────────────────────────
+中文：
+- 绘制三张核心图：容量衰减、SOH 曲线、EOL 直方图
+- 确保所有电池文件（B0005–B0056）均可显示
+- 训练线性回归与随机森林模型输出 results.csv
+
+English:
+- Produced 3 main plots: Capacity Fade, SOH vs Cycle, EOL Histogram
+- Verified all batteries (B0005–B0056) visualized correctly
+- Added Linear Regression & Random Forest model training, saved results.csv
+
+
+【阶段 4】增强清洗逻辑（Enhanced Cleaning Logic）
+──────────────────────────────
+中文：
+- 引入暖机修剪（Warm-up trimming）：删除前 8 次若跳升 >20%
+- 引入断崖剔除（Cliff drop filter）：单步下降超过 30% 删除
+- 引入重启段识别（Restart segment）：连续低谷 ≥2 点且恢复 ≥90%
+- 使用滑动中位数平滑（窗口=3）
+- 基线容量改为前 10 次中位数（更稳健）
+- 输出 clean_dataset_enhanced.csv 与报告文件
+
+English:
+- Added warm-up trimming: remove first 8 cycles if jump >20%
+- Added cliff-drop filter: remove single drops >30%
+- Added restart-segment detection: ≥2 low points that recover ≥90%
+- Added median smoothing (window=3)
+- Changed baseline to median of first 10 valid cycles
+- Exported clean_dataset_enhanced.csv and cleaning_report_enhanced.txt
+
+
+【阶段 5】全显示版本（Show-All Visualization）
+──────────────────────────────
+中文：
+- 新建 visualize_show_all_normal.py：不弱化、不排除，显示全部电池
+- 保留四个绘图函数，统一线条样式
+- Y 轴固定 SOH [0.6–1.3]
+- 仅绘图阶段裁剪 SOH ≤ 1.0
+- 确保每条曲线完整保留
+
+English:
+- Created visualize_show_all_normal.py (no filtering, all batteries shown)
+- Kept all 4 plotting functions, unified line style
+- Fixed Y-axis for SOH in range [0.6–1.3]
+- Clip SOH ≤1.0 only during plotting
+- Ensured every curve remains visible
+
+
+【阶段 6】方案 B 实施（Enhanced Cleaning + Show-All Integration）
+──────────────────────────────
+中文：
+- 集成增强清洗逻辑 + 全显示可视化
+- 保留所有电池但自动清除异常段
+- 生成 battery_rul_clean_and_show_all_patch.zip
+- 输出 clean_dataset_enhanced.csv、cleaning_report_enhanced.txt
+
+English:
+- Integrated enhanced cleaning with show-all visualization
+- Kept all batteries but removed warm-up/cliff/restart anomalies
+- Released battery_rul_clean_and_show_all_patch.zip
+- Outputs: clean_dataset_enhanced.csv, cleaning_report_enhanced.txt
+
+
+【阶段 7】起点竖线修复（Start Jump Fix）
+──────────────────────────────
+中文：
+- 修复图像左侧“竖直冲线”问题
+- 在绘图函数中跳过第一个点（x[1:], y[1:]）
+- 适用于容量曲线、SOH 曲线、单电池曲线
+- 保持所有文件名、函数名不变（visualize.py）
+
+English:
+- Fixed vertical jump on left side of plots
+- Skipped first point in plotting (x[1:], y[1:])
+- Applied to capacity, SOH, and per-battery plots
+- Kept original file and function names (visualize.py)
+
+
+【阶段 8】结果验证（Final Validation）
+──────────────────────────────
+中文：
+- 所有曲线平滑、无起点飙高、无直角折线
+- SOH ≤ 1.05，曲线间分布自然
+- Histogram 寿命分布合理（多数 20–60 cycles）
+- 达到课程展示与建模标准
+
+English:
+- Curves are smooth, no initial spike, no vertical lines
+- SOH ≤ 1.05, realistic spread between batteries
+- Histogram shows reasonable EOL distribution (mostly 20–60 cycles)
+- Meets academic visualization and modeling standards
+
+
+──────────────────────────────────────────────
+最终状态（Final State）
+──────────────────────────────────────────────
+当前版本文件：
+  • src/load_data.py  （增强清洗版）
+  • src/visualize.py  （全显示 + 起点修复）
+  • outputs/clean_dataset_enhanced.csv
+  • outputs/cleaning_report_enhanced.txt
+
+项目现状总结：
+   数据读取稳定、清洗自动化
+   异常剔除逻辑完善
+   可直接进行后续机器学习模型训练
+
+English Summary:
+   Stable data loading and automated cleaning
+   Robust anomaly detection and removal
+   Ready for downstream machine learning model training
