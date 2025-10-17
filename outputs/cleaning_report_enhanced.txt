@@ -1,0 +1,3 @@
+Enhanced cleaning report (方案B, no exclusion, all curves shown):
+B0050.mat	too_short_after_cleaning(7)
+B0052.mat	too_short_after_cleaning(4)
