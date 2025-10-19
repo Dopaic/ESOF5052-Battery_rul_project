@@ -1,0 +1,8 @@
+Analyzing the dataset and exploring relationships:
+I analyzed the NASA battery dataset to understand how it was structured and the mean of each parameter. I used matlab to find the logical connections of the dataset, especially the linear relationships between cycle count, capacity, and State of Health (SOH), which are important for predicting the Remaining Useful Life (RUL).
+
+Reviewing and documenting the code:
+I carefully examined our project's code to check its logic, accuracy, and consistency. I added clear comments to make the code easier for others to read and maintain, I explained in detail the role of each function and python document.
+
+Writing the introduction for the report:
+I was in charge of writing the Introduction section of the final report. This part explains the background of the project, what problem we’re trying to solve, why it’s important, what technical challenges we faced, and what approach we took. It also outlines how the rest of the report is organized.
